@@ -10,5 +10,6 @@ public class OthelloMove
         y = a_y;
     }
     
+    @Override
     public String toString() {return "Player " + OthelloState.PLAYER_NAMES[player] + " to " + x + ", " + y;}
 }

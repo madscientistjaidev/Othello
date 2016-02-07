@@ -5,6 +5,7 @@ public class OthelloRandomPlayer extends OthelloPlayer
 {
     Random r = new Random();
    
+    @Override
     public OthelloMove getMove(OthelloState state)
     {
         // generate the list of moves:

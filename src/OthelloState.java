@@ -13,9 +13,8 @@ public class OthelloState
     int board[][] = null;
     int nextPlayerToMove = PLAYER1;
     
-    /*
-     * Constructor of the game state, it creates a board with the initial state for the game of Othello    
-     */
+    /** Constructor of the game state, it creates a board with the initial state for the game of Othello
+     * @param a_boardSize.*/
     public OthelloState(int a_boardSize)
     {
         boardSize = a_boardSize;
@@ -34,12 +33,11 @@ public class OthelloState
     }
     
     
-    /*
-     * Converts a game board to a string, for displaying it via the console    
-     */
+    /** Converts a game board to a string, for displaying it via the console.*/
+    @Override
     public String toString()
     {
-        StringBuffer output = new StringBuffer();
+        StringBuilder output = new StringBuilder();
         
         for(int j = 0;j<boardSize;j++)
         {
@@ -56,36 +54,28 @@ public class OthelloState
         return output.toString();
     }
 
-    /*
-     * Makes a copy of a game state
-     */
+    /** Makes a copy of a game state.*/
+    @Override
     public OthelloState clone()
     {
         OthelloState newState = new OthelloState(boardSize);
         
         for(int i = 0;i<boardSize;i++)
-            for(int j = 0;j<boardSize;j++)
-                newState.board[i][j] = board[i][j];
+            System.arraycopy(board[i], 0, newState.board[i], 0, boardSize);
         
         newState.nextPlayerToMove = nextPlayerToMove;
         
         return newState;
     }
     
-    /*
-     * Determines whether the game is over or not
-     */
+    /** Determines whether the game is over or not.*/
     public boolean gameOver()
     {
-        if (generateMoves(PLAYER1).isEmpty() &&
-            generateMoves(PLAYER2).isEmpty()) return true;
-        
-        return false;
+        return generateMoves(PLAYER1).isEmpty() &&
+                generateMoves(PLAYER2).isEmpty();
     }
     
-    /*
-     * Returns the final score, once a game is over
-     */
+    /** Returns the final score, once a game is over.*/
     public int score()
     {
         int score = 0;
@@ -100,17 +90,14 @@ public class OthelloState
         return score;
     }
 
-    /*
-     * Returns the list of possible moves for the next player to move
-     */
+    /** Returns the list of possible moves for the next player to move.*/
     public List<OthelloMove> generateMoves() {return generateMoves(nextPlayerToMove);}
     
-    /*
-     * Returns the list of possible moves for player 'player'
-     */
+    /** Returns the list of possible moves for player 'player'
+     * @param player.*/
     public List<OthelloMove> generateMoves(int player)
     {
-        List<OthelloMove> moves = new LinkedList<OthelloMove>();
+        List<OthelloMove> moves = new LinkedList<>();
 
         // these two arrays encode the 8 posible directions in which a player can capture pieces:
         int offs_x[] = { 0, 1, 1, 1, 0,-1,-1,-1};
@@ -152,11 +139,10 @@ public class OthelloState
         return moves;
     }
     
-    /*
-     * Modifies the game state as for applying the given 'move'
+    /** Modifies the game state as for applying the given 'move'.
      * Notice that move can be "null", which means that the player passes.
-     * "passing" is only allowed if a player has no other moves available.
-     */
+     * "Passing" is only allowed if a player has no other moves available.
+     * @param move.*/
     public void applyMove(OthelloMove move)
     {
         nextPlayerToMove = otherPlayer(nextPlayerToMove);
@@ -185,7 +171,7 @@ public class OthelloState
                 
                 if (board[current_x][current_y] == move.player)
                 {
-                    // pieces captured!:
+                    //Pieces captured.
                     int reversed_x = move.x + offs_x[i];
                     int reversed_y = move.y + offs_y[i];
                     
@@ -202,9 +188,8 @@ public class OthelloState
         }
     }
     
-    /*
-     * Creates a new game state that has the result of applying move 'move'
-     */
+    /** Creates a new game state that has the result of applying move 'move'
+     * @param move.*/
     public OthelloState applyMoveCloning(OthelloMove move)
     {
         OthelloState newState = clone();
@@ -213,6 +198,8 @@ public class OthelloState
         return newState;
     }
     
+    /**Returns other player
+     * @param player.*/
     public int otherPlayer(int player)
     {
         if (player==PLAYER1) return PLAYER2;
