@@ -4,8 +4,6 @@ public class Test
     {
         Test t = new Test();
         
-        
-        
         System.out.println(t.MinMaxPlay(8));
     }
     
@@ -30,7 +28,7 @@ public class Test
         }
         while(!state.gameOver());
 
-        // Return the result of the game:
+        //Returns the result of the game.
         String result = "Score = " + state.score() + "\n" + state;
         return result;
     }
