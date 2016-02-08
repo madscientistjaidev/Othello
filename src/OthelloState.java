@@ -60,8 +60,7 @@ public class OthelloState
     {
         OthelloState newState = new OthelloState(boardSize);
         
-        for(int i = 0;i<boardSize;i++)
-            System.arraycopy(board[i], 0, newState.board[i], 0, boardSize);
+        for(int i = 0;i<boardSize;i++) System.arraycopy(board[i], 0, newState.board[i], 0, boardSize);
         
         newState.nextPlayerToMove = nextPlayerToMove;
         
@@ -69,11 +68,7 @@ public class OthelloState
     }
     
     /** Determines whether the game is over or not.*/
-    public boolean gameOver()
-    {
-        return generateMoves(PLAYER1).isEmpty() &&
-                generateMoves(PLAYER2).isEmpty();
-    }
+    public boolean gameOver() {return generateMoves(PLAYER1).isEmpty() && generateMoves(PLAYER2).isEmpty();}
     
     /** Returns the final score, once a game is over.*/
     public int score()
