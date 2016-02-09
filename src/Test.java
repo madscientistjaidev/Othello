@@ -4,7 +4,7 @@ public class Test
     {
         Test t = new Test();
         
-        System.out.println(t.MinMaxPlay(8));
+        System.out.println(t.MinMaxPlay(16));
     }
     
     /**Plays a game with 2 random players.
@@ -48,7 +48,7 @@ public class Test
             System.out.print(state);
             
             // Get the move from the player:
-            OthelloMove move = players[state.nextPlayerToMove].getMove(state);           
+            OthelloMove move = players[state.nextPlayerToMove].getMove(state);
             System.out.println(move);
             state = state.applyMoveCloning(move);            
         }
