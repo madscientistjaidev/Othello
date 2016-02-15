@@ -1,12 +1,12 @@
 import java.util.List;
 
-public class MinMaxPlayer extends OthelloPlayer
+public class MiniMaxPlayer extends OthelloPlayer
 {
-    int depth;
+    int maxDepth;
     
-    MinMaxPlayer(int depth)
+    MiniMaxPlayer(int maxDepth)
     {
-        this.depth = depth;
+        this.maxDepth = maxDepth;
     }
     
     /**Returns best move.
@@ -21,18 +21,31 @@ public class MinMaxPlayer extends OthelloPlayer
         //If there are no possible moves, return null.
         if(moves.isEmpty()) return null;
         
-        if(state.nextPlayerToMove==0) return maxMove(state, moves);
-        return minMove(state, moves);
+        if(state.nextPlayerToMove==0) return maxMove(state, moves, maxDepth, 1);
+        return minMove(state, moves, maxDepth, 1);
     }
     
     /**Returns the move with the maximum score.
      * @param state
      * @param moves
      */
-    private OthelloMove maxMove(OthelloState state, List<OthelloMove> moves)
+    private OthelloMove maxMove(OthelloState state, List<OthelloMove> moves, int maxDepth, int depth)
     {
         OthelloMove maxMove = moves.get(0);
         OthelloState tempState;
+        
+        //If at max depth.
+        if(maxDepth==depth)
+        {
+            for(OthelloMove m : moves)
+            {
+                tempState = state.applyMoveCloning(m);
+                if(tempState.score()>state.applyMoveCloning(maxMove).score())
+                    maxMove=m;
+            }
+
+            return maxMove;
+        }
         
         for(OthelloMove m : moves)
         {
@@ -40,7 +53,7 @@ public class MinMaxPlayer extends OthelloPlayer
             if(tempState.score()>state.applyMoveCloning(maxMove).score())
                 maxMove=m;
         }
-        
+
         return maxMove;
     }
     
@@ -48,10 +61,23 @@ public class MinMaxPlayer extends OthelloPlayer
      * @param state
      * @param moves
      */
-    private OthelloMove minMove(OthelloState state, List<OthelloMove> moves)
+    private OthelloMove minMove(OthelloState state, List<OthelloMove> moves, int maxDepth, int depth)
     {
         OthelloMove maxMove = moves.get(0);
         OthelloState tempState;
+        
+        //If at max depth.
+        if(maxDepth==depth)
+        {
+            for(OthelloMove m : moves)
+            {
+                tempState = state.applyMoveCloning(m);
+                if(tempState.score()<state.applyMoveCloning(maxMove).score())
+                    maxMove=m;
+            }
+
+            return maxMove;
+        }
         
         for(OthelloMove m : moves)
         {

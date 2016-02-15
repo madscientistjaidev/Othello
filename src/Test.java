@@ -1,10 +1,32 @@
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
 public class Test
 {    
+    /**
+     *
+     * @param args
+     */
     public static void main(String args[])
     {
+        Scanner sc = new Scanner(System.in);
+        
         Test t = new Test();
         
-        System.out.println(t.MinMaxPlay(16));
+        System.out.println("Playing a MiniMax vs Random game");
+        
+        System.out.println("Enter board size. Default is 8");
+        int boardSize = 8;
+        try {boardSize = sc.nextInt();}
+        catch(NumberFormatException | InputMismatchException e) {}
+        
+        System.out.println("Enter depth. Default is 5.");
+        int maxDepth = 5;
+        try {maxDepth = sc.nextInt();}
+        catch(NumberFormatException | InputMismatchException e) {}
+
+        System.out.println(t.MinMaxPlay(boardSize, maxDepth));
+        
     }
     
     /**Plays a game with 2 random players.
@@ -35,11 +57,11 @@ public class Test
     
     /**Plays a game with a MinMax player versus a random player.
      * @param boardSize*/
-    String MinMaxPlay(int boardSize)
+    String MinMaxPlay(int boardSize, int maxDepth)
     {
         // Create the game state with the initial position for an 8x8 board:
         OthelloState state = new OthelloState(boardSize);
-        OthelloPlayer players[] = {new MinMaxPlayer(5), new OthelloRandomPlayer()};
+        OthelloPlayer players[] = {new MiniMaxPlayer(maxDepth), new OthelloRandomPlayer()};
         
         do
         {
